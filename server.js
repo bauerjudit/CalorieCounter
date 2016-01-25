@@ -38,6 +38,14 @@ app.delete("/meals/:id", function(req, res) {
 });
 
 
+app.post("/meals", function(req, res) {
+	var attribute = req.body;
+	items.postMeal(attribute, function (item) {
+		res.status(200).json(item);
+	});
+});
+
+
 
 function logRequest(req, res, next) {
   var parts = [

@@ -36,8 +36,19 @@ function deleteMeal(id, callback) {
 	});
 }
 
+
+function postMeal(attribute, callback) {
+	connection.query('INSERT INTO caloriecounter SET ?', attribute, function(err, result) {
+		if (err) throw err;
+		callback(result.insertId, callback);
+	});
+}
+
+
+
 module.exports = {
   all: getMeals,
   getOneMeal: getOneMeal,
-  deleteMeal: deleteMeal
+  deleteMeal: deleteMeal,
+  postMeal: postMeal
 };
