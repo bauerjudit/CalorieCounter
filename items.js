@@ -28,7 +28,16 @@ function getOneMeal(id, callback) {
 	});
 }
 
+function deleteMeal(id, callback) {
+	connection.query('DELETE FROM caloriecounter WHERE id = ?', id, function(err, result) {
+		if (err) throw err;
+		var item = result[0];
+		callback(item);
+	});
+}
+
 module.exports = {
   all: getMeals,
-  getOneMeal: getOneMeal
+  getOneMeal: getOneMeal,
+  deleteMeal: deleteMeal
 };

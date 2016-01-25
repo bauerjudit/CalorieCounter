@@ -24,8 +24,15 @@ app.get("/meals", function(req, res) {
 
 app.get("/meals/:id", function(req, res) {
 	var id = parseInt(req.params.id);
-	console.log(id);
 	items.getOneMeal(id, function (item) {
+		res.status(200).json(item);
+	});
+});
+
+
+app.delete("/meals/:id", function(req, res) {
+	var id = parseInt(req.params.id);
+	items.deleteMeal(id, function (item) {
 		res.status(200).json(item);
 	});
 });
@@ -41,4 +48,3 @@ function logRequest(req, res, next) {
   console.log(parts.join(" "));
   next();
 };
-
