@@ -5,12 +5,8 @@ var url = "http://localhost:3000/meals";
 var listOfMeals = document.querySelector(".listMeals");
 
 
-function startRequest() {
-	postNewMealToServer(postNewMealToHtml);
-}
-
-function postNewMealToHtml(postedMeal) {
-	listOfMeals.innerText = postedMeal.text;
+function listAfterPostNewMeal () {
+	listMealsFromServer(listMealsOnHtml)
 }
 
 function postNewMealToServer(callback) {
@@ -45,8 +41,8 @@ function listMealsFromServer(callback) {
 }
 
 
-function listMealsOnHtml(listItems) {
-	listItems.forEach(function(meal) {
+function listMealsOnHtml(res, callback) {
+	res.forEach(function(meal) {
 		var newMeal = document.createElement("p");
 		newMeal.innerText = meal.name + " " + meal.calories + " "  + meal.date;
 		listOfMeals.appendChild(newMeal);
@@ -61,4 +57,6 @@ var textAreaCalories = document.querySelector(".addCalories");
 var textAreaDate = document.querySelector("#date");
 
 var addButton = document.querySelector(".button");
-addButton.addEventListener("click", startRequest);
+addButton.addEventListener("click", function() {
+	postNewMealToServer(listAfterPostNewMeal);
+});
