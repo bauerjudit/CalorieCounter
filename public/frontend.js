@@ -6,6 +6,23 @@ var listOfMeals = document.querySelector(".listMeals");
 var sumCalories = document.querySelector(".sumCalories");
 
 
+function filterDate(res) {
+	console.log(res);
+	res.forEach(function(meal) {
+		if(meal.date === textAreaFilterDate.value) {
+			console.log(meal.date);
+			clears();
+			listOfMeals.innerText = meal.name + " " + meal.calories + " " + meal.date;
+		}
+	});
+}
+
+
+function clears() {
+	listOfMeals.innerText = "";
+}
+
+
 function sumAllTheCalories(res) {
 	var summa = 0;
 	res.forEach(function(meal) {
@@ -27,9 +44,7 @@ function postNewMealToServer(callback) {
 	var req = new XMLHttpRequest();
 	req.open("POST", url);
 	req.setRequestHeader('Content-Type', 'application/json');
-	console.log({name: textAreaMeal.value, calories: textAreaCalories.value, date: textAreaDate.value})
 	req.send(JSON.stringify({name: textAreaMeal.value, calories: textAreaCalories.value, date: textAreaDate.value}));
-	console.log(JSON.stringify({name: textAreaMeal.value, calories: textAreaCalories.value, date: textAreaDate.value}));
 	console.log("start");
 	req.onreadystatechange = function () {
 		if(req.readyState === 4) {
@@ -73,4 +88,13 @@ var textAreaDate = document.querySelector("#date");
 var addButton = document.querySelector(".button");
 addButton.addEventListener("click", function() {
 	postNewMealToServer(listAfterPostNewMeal);
+});
+
+
+var textAreaFilterDate = document.querySelector(".filterByDate");
+
+
+var filterByDateButton = document.querySelector(".filterDate");
+filterByDateButton.addEventListener("click", function() {
+	listMealsFromServer(filterDate);
 });
