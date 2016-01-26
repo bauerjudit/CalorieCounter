@@ -7,6 +7,24 @@
   </head>
   <body>
     <h1>Calorie Counter</h1>
+    <div class="forms">
+	    <textarea class="addMeal">Add your meal</textarea>
+	</div>
+	<div class="forms">
+	    <textarea class="addCalories">Add calories</textarea>
+	</div>
+	<div class="forms">
+	    <textarea id="date" name="date"></textarea>
+	</div>
+	<div class="button">
+		<button>Add new item</button>
+	</div>
+	<div class="listMeals"></div>
+
+	<script type="text/javascript">
+	  document.getElementById('date').value = Date();
+	</script>
     <script src="frontend.js"></script>
+    
   </body>
 </html>
