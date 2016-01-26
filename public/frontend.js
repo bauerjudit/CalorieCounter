@@ -2,15 +2,21 @@
 
 var url = "http://localhost:3000/meals";
 
+var addButton = document.querySelector(".button");
+var filterByDateButton = document.querySelector(".filterDate");
 var listOfMeals = document.querySelector(".listMeals");
+var listAllButton = document.querySelector(".listAll");
+var mealNumber = document.querySelector(".numberOfMeals")
 var sumCalories = document.querySelector(".sumCalories");
+var textAreaMeal = document.querySelector(".addMeal");
+var textAreaCalories = document.querySelector(".addCalories");
+var textAreaDate = document.querySelector("#date");
+var textAreaFilterDate = document.querySelector(".filterByDate");
 
 
 function filterDate(res) {
-	console.log(res);
 	res.forEach(function(meal) {
 		if(meal.date === textAreaFilterDate.value) {
-			console.log(meal.date);
 			clears();
 			listOfMeals.innerText = meal.name + " " + meal.calories + " " + meal.date;
 		}
@@ -32,11 +38,19 @@ function sumAllTheCalories(res) {
 	return summa;
 }
 
-listMealsFromServer(sumAllTheCalories);
+function numberOfMeals(res) {
+	var count = 0;
+	res.forEach(function(meal) {
+		count ++
+	})
+	mealNumber.innerText = "You have " + count + " item(s)";
+	return count;
+}
+
+listMealsFromServer(numberOfMeals);
 
 
-
-function listAfterPostNewMeal() {
+function listAllMeals() {
 	listMealsFromServer(listMealsOnHtml)
 }
 
@@ -73,28 +87,25 @@ function listMealsFromServer(callback) {
 function listMealsOnHtml(res) {
 	res.forEach(function(meal) {
 		var newMeal = document.createElement("p");
-		newMeal.innerText = meal.name + " " + meal.calories + " "  + meal.date;
+		newMeal.innerText = meal.name + " " + meal.calories + " " + meal.date;
 		listOfMeals.appendChild(newMeal);
 	});
 }
 
 
-listMealsFromServer(listMealsOnHtml);
+listAllMeals();
 
-var textAreaMeal = document.querySelector(".addMeal");
-var textAreaCalories = document.querySelector(".addCalories");
-var textAreaDate = document.querySelector("#date");
+listMealsFromServer(sumAllTheCalories);
 
-var addButton = document.querySelector(".button");
+
 addButton.addEventListener("click", function() {
-	postNewMealToServer(listAfterPostNewMeal);
+	postNewMealToServer(listAllMeals);
 });
 
 
-var textAreaFilterDate = document.querySelector(".filterByDate");
-
-
-var filterByDateButton = document.querySelector(".filterDate");
 filterByDateButton.addEventListener("click", function() {
 	listMealsFromServer(filterDate);
 });
+
+
+listAllButton.addEventListener("click", listAllMeals);

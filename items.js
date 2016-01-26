@@ -47,7 +47,6 @@ function postMeal(attribute, callback) {
 }
 
 
-
 module.exports = {
   all: getMeals,
   getOneMeal: getOneMeal,

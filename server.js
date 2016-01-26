@@ -46,7 +46,6 @@ app.post("/meals", function(req, res) {
 });
 
 
-
 function logRequest(req, res, next) {
   var parts = [
     new Date(),
