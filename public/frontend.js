@@ -3,9 +3,23 @@
 var url = "http://localhost:3000/meals";
 
 var listOfMeals = document.querySelector(".listMeals");
+var sumCalories = document.querySelector(".sumCalories");
 
 
-function listAfterPostNewMeal () {
+function sumAllTheCalories(res) {
+	var summa = 0;
+	res.forEach(function(meal) {
+		summa += meal.calories;
+	});
+	sumCalories.innerText = "Calories : " + summa;
+	return summa;
+}
+
+listMealsFromServer(sumAllTheCalories);
+
+
+
+function listAfterPostNewMeal() {
 	listMealsFromServer(listMealsOnHtml)
 }
 
@@ -41,7 +55,7 @@ function listMealsFromServer(callback) {
 }
 
 
-function listMealsOnHtml(res, callback) {
+function listMealsOnHtml(res) {
 	res.forEach(function(meal) {
 		var newMeal = document.createElement("p");
 		newMeal.innerText = meal.name + " " + meal.calories + " "  + meal.date;
