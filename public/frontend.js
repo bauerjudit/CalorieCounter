@@ -22,21 +22,11 @@ function getDateFromServer(url, callback) {
 	req.onreadystatechange = function () {
 		if(req.readyState === 4) {
 			var res = JSON.parse(req.response);
+			console.log(res);
 			callback(res);
 		}
 	}
 }
-
-
-function filterDate(res) {
-	res.forEach(function(meal) {
-		if(meal.date === textAreaFilterDate.value) {
-			clears();
-			listOfMeals.innerText = meal.name + " " + meal.calories + " " + meal.date;
-		}
-	});
-}
-
 
 function clears() {
 	listOfMeals.innerText = "";
@@ -73,6 +63,7 @@ function postNewMealToServer(callback) {
 	req.open("POST", url);
 	req.setRequestHeader('Content-Type', 'application/json');
 	req.send(JSON.stringify({name: textAreaMeal.value, calories: textAreaCalories.value, date: textAreaDate.value}));
+	console.log(JSON.stringify({name: textAreaMeal.value, calories: textAreaCalories.value, date: textAreaDate.value}))
 	console.log("start");
 	req.onreadystatechange = function () {
 		if(req.readyState === 4) {
@@ -92,6 +83,7 @@ function listMealsFromServer(callback) {
 		if(req.readyState === 4) {
 			var res = JSON.parse(req.response);
 			console.log("response ok");
+			console.log(res)
 			return callback(res);
 		}
 	}
@@ -101,7 +93,7 @@ function listMealsFromServer(callback) {
 function listMealsOnHtml(res) {
 	res.forEach(function(meal) {
 		var newMeal = document.createElement("p");
-		newMeal.innerText = meal.name + " " + meal.calories + " " + meal.date;
+		newMeal.innerText = meal.name + " " + meal.calories + " " + meal.date.split("T")[0];
 		listOfMeals.appendChild(newMeal);
 	});
 }
@@ -113,6 +105,7 @@ listMealsFromServer(sumAllTheCalories);
 
 
 addButton.addEventListener("click", function() {
+	clears();
 	postNewMealToServer(listAllMeals);
 });
 
@@ -121,7 +114,14 @@ filterByDateButton.addEventListener("click", function() {
 	var newUrl = url + "/filter/" + textAreaFilterDate.value;
 	clears();
 	getDateFromServer(newUrl, listMealsOnHtml);
+	getDateFromServer(newUrl, sumAllTheCalories);
+	getDateFromServer(newUrl, numberOfMeals);
 });
 
 
-listAllButton.addEventListener("click", listAllMeals);
+listAllButton.addEventListener("click", function() {
+	clears();
+	listAllMeals();
+	listMealsFromServer(sumAllTheCalories);
+	listMealsFromServer(numberOfMeals);
+});

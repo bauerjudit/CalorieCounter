@@ -6,7 +6,8 @@ var connection = mysql.createConnection({
   host     : 'localhost',
   user     : 'root',
   password : 'password',
-  database : 'caloriecounter'
+  database : 'caloriecounter',
+  timezone : 'utc'
 });
 
 connection.connect();
