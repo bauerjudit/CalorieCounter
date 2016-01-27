@@ -1,4 +1,30 @@
 h1 {
-	color: white;
-	background-color: #1E90FF;
+	font-size: 40px;
+	font-family: sans-serif;
+	text-align: center;
+	padding-bottom: 40px;
+}
+
+body {
+	background-image: url("img/wallhaven-319772.jpg");
+}
+
+.input-group {
+	padding: 5px;
+}
+
+.btn-group {
+	padding-top: 5px;
+	padding-bottom: 40px;
+}
+
+.panel {
+	padding-top: 10px;
+}
+
+.container {
+	background-color: white;
+	margin-top: 50px;
+	border-radius: 50px;
+	width: 60%;
 }
