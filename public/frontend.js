@@ -3,6 +3,7 @@
 var url = "http://localhost:3000/meals";
 
 var addButton = document.querySelector(".button");
+var consumedCalories = document.querySelector(".consumedCalories");
 var filterByDateButton = document.querySelector(".filterDate");
 var listOfMeals = document.querySelector(".listMeals");
 var listAllButton = document.querySelector(".listAll");
@@ -33,6 +34,20 @@ function clears() {
 }
 
 
+function countConsumedCalories(res) {
+	var dailyMaxCalories = 1500;
+	var summa = 0;
+	res.forEach(function(meal) {
+		summa += meal.calories;
+	});
+	consumedCalories.innerText = "You have " + (dailyMaxCalories - summa) + " calories left";
+	return (dailyMaxCalories - summa);
+
+}
+
+
+
+
 function sumAllTheCalories(res) {
 	var summa = 0;
 	res.forEach(function(meal) {
@@ -50,8 +65,6 @@ function numberOfMeals(res) {
 	mealNumber.innerText = "You have " + count + " item(s)";
 	return count;
 }
-
-listMealsFromServer(numberOfMeals);
 
 
 function listAllMeals() {
@@ -101,8 +114,11 @@ function listMealsOnHtml(res) {
 
 listAllMeals();
 
+listMealsFromServer(numberOfMeals);
+
 listMealsFromServer(sumAllTheCalories);
 
+listMealsFromServer(countConsumedCalories);
 
 addButton.addEventListener("click", function() {
 	clears();
@@ -116,6 +132,7 @@ filterByDateButton.addEventListener("click", function() {
 	getDateFromServer(newUrl, listMealsOnHtml);
 	getDateFromServer(newUrl, sumAllTheCalories);
 	getDateFromServer(newUrl, numberOfMeals);
+	getDateFromServer(newUrl, countConsumedCalories);
 });
 
 
@@ -124,4 +141,5 @@ listAllButton.addEventListener("click", function() {
 	listAllMeals();
 	listMealsFromServer(sumAllTheCalories);
 	listMealsFromServer(numberOfMeals);
+	listMealsFromServer(countConsumedCalories);
 });
