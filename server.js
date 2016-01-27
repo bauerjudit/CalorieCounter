@@ -45,6 +45,15 @@ app.post("/meals", function(req, res) {
 	});
 });
 
+app.get("/meals/filter/:date", function(req, res) {
+	var date = req.params.date;
+	items.filterDate(date, function(item) {
+		res.status(200).json(item);
+	});
+});
+
+
+
 
 function logRequest(req, res, next) {
   var parts = [

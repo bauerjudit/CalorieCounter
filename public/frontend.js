@@ -14,6 +14,20 @@ var textAreaDate = document.querySelector("#date");
 var textAreaFilterDate = document.querySelector(".filterByDate");
 
 
+function getDateFromServer(url, callback) {
+	var req = new XMLHttpRequest;
+	req.open('GET', url);
+	req.setRequestHeader('Content-Type', 'application/json');
+	req.send();
+	req.onreadystatechange = function () {
+		if(req.readyState === 4) {
+			var res = JSON.parse(req.response);
+			callback(res);
+		}
+	}
+}
+
+
 function filterDate(res) {
 	res.forEach(function(meal) {
 		if(meal.date === textAreaFilterDate.value) {
@@ -104,7 +118,9 @@ addButton.addEventListener("click", function() {
 
 
 filterByDateButton.addEventListener("click", function() {
-	listMealsFromServer(filterDate);
+	var newUrl = url + "/filter/" + textAreaFilterDate.value;
+	clears();
+	getDateFromServer(newUrl, listMealsOnHtml);
 });
 
 

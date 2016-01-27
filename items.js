@@ -47,9 +47,17 @@ function postMeal(attribute, callback) {
 }
 
 
+function filterDate(date, callback) {
+	connection.query('SELECT id, name, calories, date FROM caloriecounter WHERE CAST(date AS DATE)=?', date, function(err, result) {
+		if (err) throw err;
+		callback(result);
+	});
+}
+
 module.exports = {
   all: getMeals,
   getOneMeal: getOneMeal,
   deleteMeal: deleteMeal,
-  postMeal: postMeal
+  postMeal: postMeal,
+  filterDate: filterDate
 };
