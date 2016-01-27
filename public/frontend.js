@@ -82,6 +82,7 @@ function postNewMealToServer(callback) {
 		if(req.readyState === 4) {
 			var postedMeal = JSON.parse(req.response);
 			console.log("sikerült");
+			console.log(postedMeal)
 			return callback(postedMeal);
 		}
 	}
