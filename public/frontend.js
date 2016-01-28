@@ -66,7 +66,7 @@ function sumAllTheCalories(res) {
 	res.forEach(function(meal) {
 		summa += meal.calories;
 	});
-	sumCalories.innerText = "Calories : " + summa;
+	sumCalories.innerText = "Calories : " + summa + " cal";
 	return summa;
 }
 
@@ -89,6 +89,9 @@ listOfMeals.addEventListener("click", function(e) {
 	e.target.parentNode.remove();
 	var id = e.target.parentNode.getAttribute("id");
 	deleteMealFromServer(id);
+	listMealsFromServer(sumAllTheCalories);
+	listMealsFromServer(numberOfMeals);
+	listMealsFromServer(countConsumedCalories);
 })
  
 
@@ -133,24 +136,24 @@ function listMealsFromServer(callback) {
 
 function listMealsOnHtmlTable(res) {
 	var meals = res;
-	meals.forEach(function(meal) {
-		addMealsToHtmlTable(meal);
-	});
+	for(var i = 0; i < meals.length; i++) {
+		addMealsToHtmlTable(i, meals[i]);
+	};
 }
 
 
 
-function addMealsToHtmlTable(meal) {
-	var tableElement = listMealInTable(meal);
+function addMealsToHtmlTable(i, meal) {
+	var tableElement = listMealInTable(i, meal);
 	listOfMeals.innerHTML += tableElement;
 }
 
 
 
-function listMealInTable(meal) {
+function listMealInTable(i, meal) {
 	var date = meal.date.split("T")[0];
 	var line = `<tr id="${meal.id}">
-					<td>${meal.id}</td>
+					<td>${i + 1}</td>
                    <td>${meal.name}</td>
                    <td>${meal.calories}</td>
                    <td>${date}</td>

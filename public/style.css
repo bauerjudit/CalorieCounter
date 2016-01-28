@@ -48,3 +48,14 @@ body {
 	margin-left: 4px;
 }
 
+tr:hover {
+	background-color: #DADAF3;
+}
+
+.table{
+	text-align: center;
+}
+
+th {
+	text-align: center;
+}
