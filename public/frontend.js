@@ -4,8 +4,8 @@ var url = "http://localhost:3000/meals";
 
 var addButton = document.querySelector(".addButton"); // 
 var consumedCalories = document.querySelector(".consumedCalories");
-var filterByDateButton = document.querySelector(".filterDate");
-var listOfMeals = document.querySelector(".listMeals");
+var filterByDateButton = document.querySelector(".filterDate"); //
+var listOfMeals = document.querySelector(".listMeals"); //
 var listAllButton = document.querySelector(".listAll"); //
 var mealNumber = document.querySelector(".numberOfMeals") //
 var sumCalories = document.querySelector(".sumCalories"); //
@@ -13,6 +13,10 @@ var textAreaMeal = document.querySelector(".addMeal"); //
 var textAreaCalories = document.querySelector(".addCalories"); //
 var textAreaDate = document.querySelector(".addDate"); //
 var textAreaFilterDate = document.querySelector(".filterByDate"); //
+
+
+
+
 
 
 function getDateFromServer(url, callback) {
@@ -35,8 +39,9 @@ function refresCallback() {
 }
 
 function clears() {
-	while (listOfMeals.firstChild) {listOfMeals.removeChild(listOfMeals.firstChild)}
-     // listOfMeals.innerHtml = "";
+	while (listOfMeals.firstChild) {
+		listOfMeals.removeChild(listOfMeals.firstChild)
+	}
 }
 
 
@@ -46,9 +51,11 @@ function countConsumedCalories(res) {
 	res.forEach(function(meal) {
 		summa += meal.calories;
 	});
-	consumedCalories.innerText = "You have " + (dailyMaxCalories - summa) + " calories left";
-	return (dailyMaxCalories - summa);
-
+	var percent = 100 - (((dailyMaxCalories - summa) / dailyMaxCalories) * 100);
+	percent.stringify
+	console.log(percent)
+	console.log(percent + "%")
+	document.getElementById("progressbar").style.width = percent + "%";
 }
 
 
@@ -74,7 +81,6 @@ function numberOfMeals(res) {
 
 
 function listAllMeals() {
-	//listMealsFromServer(listMealsOnHtml)
 	listMealsFromServer(listMealsOnHtmlTable);
 }
 
@@ -82,7 +88,6 @@ function postNewMealToServer(callback) {
 	var req = new XMLHttpRequest();
 	req.open("POST", url);
 	req.setRequestHeader('Content-Type', 'application/json');
-	console.log(JSON.stringify({name: textAreaMeal.value, calories: textAreaCalories.value, date: textAreaDate.value}))
 	req.send(JSON.stringify({name: textAreaMeal.value, calories: textAreaCalories.value, date: textAreaDate.value}));
 	console.log("start");
 	req.onreadystatechange = function () {
@@ -127,9 +132,9 @@ function addMealsToHtmlTable(meal) {
 
 
 function listMealInTable(meal) {
-	console.log(meal);
 	var date = meal.date.split("T")[0];
 	var line = `<tr id="${meal.id}">
+					<td>${meal.id}</td>
                    <td>${meal.name}</td>
                    <td>${meal.calories}</td>
                    <td>${date}</td>
@@ -137,14 +142,6 @@ function listMealInTable(meal) {
      return line;
 }
 
-
-/*function listMealsOnHtml() {
-	res.forEach(function(meal) {
-		var newMeal = document.createElement("p");
-		newMeal.innerText = meal.name + " " + meal.calories + " " + meal.date.split("T")[0];
-		listOfMeals.appendChild(newMeal);
-	});
-}*/
 
 
 listAllMeals();
@@ -155,9 +152,16 @@ listMealsFromServer(sumAllTheCalories);
 
 listMealsFromServer(countConsumedCalories);
 
+
+
+
 addButton.addEventListener("click", function() {
 	clears();
 	postNewMealToServer(refresCallback);
+	listMealsFromServer(countConsumedCalories)
+	listMealsFromServer(sumAllTheCalories);
+	listMealsFromServer(numberOfMeals);
+
 	
 });
 
