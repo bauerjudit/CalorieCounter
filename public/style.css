@@ -3,10 +3,17 @@ h1 {
 	font-family: sans-serif;
 	text-align: center;
 	padding-bottom: 40px;
+	font-family: 'Muli';
+	color: #2d5986;
+
 }
 
 body {
-	background-image: url("img/wallhaven-319772.jpg");
+	background-image: url("img/12596773_1278725235477803_1503266871_o.jpg");
+	background-size: 100%;
+	color: #2d5986;
+	font-family: 'Muly';
+
 }
 
 .input-group {
@@ -27,4 +34,12 @@ body {
 	margin-top: 50px;
 	border-radius: 50px;
 	width: 60%;
+}
+
+.date-filter {
+	width: 30%;
+}
+
+.add-button {
+	margin-left: 4px;
 }
