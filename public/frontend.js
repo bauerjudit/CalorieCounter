@@ -84,17 +84,35 @@ function listAllMeals() {
 	listMealsFromServer(listMealsOnHtmlTable);
 }
 
+
+listOfMeals.addEventListener("click", function(e) {
+	e.target.parentNode.remove();
+	var id = e.target.parentNode.getAttribute("id");
+	deleteMealFromServer(id);
+})
+ 
+
+
+function deleteMealFromServer(id) {
+	var req = new XMLHttpRequest();
+	req.open("DELETE", url + "/" + id);
+	req.send();
+}
+
+
+
+function selectMeal() {}
+
+
+
 function postNewMealToServer(callback) {
 	var req = new XMLHttpRequest();
 	req.open("POST", url);
 	req.setRequestHeader('Content-Type', 'application/json');
 	req.send(JSON.stringify({name: textAreaMeal.value, calories: textAreaCalories.value, date: textAreaDate.value}));
-	console.log("start");
 	req.onreadystatechange = function () {
 		if(req.readyState === 4) {
 			var postedMeal = JSON.parse(req.response);
-			console.log("sikerült");
-			console.log(postedMeal)
 			return callback(postedMeal);
 		}
 	}
@@ -108,8 +126,6 @@ function listMealsFromServer(callback) {
 	req.onreadystatechange = function () {
 		if(req.readyState === 4) {
 			var res = JSON.parse(req.response);
-			console.log("response ok");
-			console.log(res)
 			callback(res);
 		}
 	}
