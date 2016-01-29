@@ -17,9 +17,6 @@ var textAreaFilterDate = document.querySelector(".filterByDate");
 
 
 
-
-
-
 function getDateFromServer(url, callback) {
 	var req = new XMLHttpRequest;
 	req.open('GET', url);
@@ -169,23 +166,30 @@ function updateHtmlAfterPost() {
 }
 
 
-
-addButton.addEventListener("click", function() {
+function updateHtmlAfterAddNewMeal() {
 	postNewMealToServer(refresCallback);
 	updateValuesOnHtml();
-});
+}
 
-
-filterByDateButton.addEventListener("click", function() {
+function updateHtmlAfterFilter() {
 	clears();
 	updateHtmlAfterPost();
-});
+}
 
-
-listAllButton.addEventListener("click", function() {
+function updateHtmlByListAllMeal() {
 	refresCallback();
 	updateValuesOnHtml();
-});
+}
+
+
+addButton.addEventListener("click", updateHtmlAfterAddNewMeal);
+
+
+filterByDateButton.addEventListener("click", updateHtmlAfterFilter);
+
+
+listAllButton.addEventListener("click", updateHtmlByListAllMeal);
+
 
 listOfMeals.addEventListener("click", function(meal) {
 	meal.target.parentNode.remove();
