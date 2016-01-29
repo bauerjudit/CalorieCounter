@@ -2,17 +2,18 @@
 
 var url = "http://localhost:3000/meals";
 
-var addButton = document.querySelector(".addButton"); // 
+var addButton = document.querySelector(".addButton"); 
 var consumedCalories = document.querySelector(".consumedCalories");
-var filterByDateButton = document.querySelector(".filterDate"); //
-var listOfMeals = document.querySelector(".listMeals"); //
-var listAllButton = document.querySelector(".listAll"); //
-var mealNumber = document.querySelector(".numberOfMeals") //
-var sumCalories = document.querySelector(".sumCalories"); //
-var textAreaMeal = document.querySelector(".addMeal"); //
-var textAreaCalories = document.querySelector(".addCalories"); //
-var textAreaDate = document.querySelector(".addDate"); //
-var textAreaFilterDate = document.querySelector(".filterByDate"); //
+var filterByDateButton = document.querySelector(".filterDate"); 
+var listOfMeals = document.querySelector(".listMeals"); 
+var listAllButton = document.querySelector(".listAll"); 
+var mealNumber = document.querySelector(".numberOfMeals");
+var progressBar = document.getElementById("progressbar");
+var sumCalories = document.querySelector(".sumCalories"); 
+var textAreaMeal = document.querySelector(".addMeal"); 
+var textAreaCalories = document.querySelector(".addCalories"); 
+var textAreaDate = document.querySelector(".addDate"); 
+var textAreaFilterDate = document.querySelector(".filterByDate");
 
 
 
@@ -27,16 +28,11 @@ function getDateFromServer(url, callback) {
 	req.onreadystatechange = function () {
 		if(req.readyState === 4) {
 			var res = JSON.parse(req.response);
-			console.log(res);
 			callback(res);
 		}
 	}
 }
 
-function refresCallback() {
-	clears();
-	listMealsFromServer(listMealsOnHtmlTable);
-}
 
 function clears() {
 	while (listOfMeals.firstChild) {
@@ -53,12 +49,8 @@ function countConsumedCalories(res) {
 	});
 	var percent = 100 - (((dailyMaxCalories - summa) / dailyMaxCalories) * 100);
 	percent.stringify
-	console.log(percent)
-	console.log(percent + "%")
-	document.getElementById("progressbar").style.width = percent + "%";
+	progressBar.style.width = percent + "%";
 }
-
-
 
 
 function sumAllTheCalories(res) {
@@ -80,32 +72,11 @@ function numberOfMeals(res) {
 }
 
 
-function listAllMeals() {
-	listMealsFromServer(listMealsOnHtmlTable);
-}
-
-
-listOfMeals.addEventListener("click", function(e) {
-	e.target.parentNode.remove();
-	var id = e.target.parentNode.getAttribute("id");
-	deleteMealFromServer(id);
-	listMealsFromServer(sumAllTheCalories);
-	listMealsFromServer(numberOfMeals);
-	listMealsFromServer(countConsumedCalories);
-})
- 
-
-
 function deleteMealFromServer(id) {
 	var req = new XMLHttpRequest();
 	req.open("DELETE", url + "/" + id);
 	req.send();
 }
-
-
-
-function selectMeal() {}
-
 
 
 function postNewMealToServer(callback) {
@@ -163,42 +134,62 @@ function listMealInTable(i, meal) {
 
 
 
-listAllMeals();
-
-listMealsFromServer(numberOfMeals);
-
-listMealsFromServer(sumAllTheCalories);
-
-listMealsFromServer(countConsumedCalories);
 
 
+function init() {
+	listAllMeals();
+	updateValuesOnHtml();
+}
+
+init();
 
 
-addButton.addEventListener("click", function() {
+function refresCallback() {
 	clears();
-	postNewMealToServer(refresCallback);
+	listAllMeals();
+}
+
+
+function listAllMeals() {
+	listMealsFromServer(listMealsOnHtmlTable);
+}
+
+function updateValuesOnHtml() {
 	listMealsFromServer(countConsumedCalories)
 	listMealsFromServer(sumAllTheCalories);
 	listMealsFromServer(numberOfMeals);
+}
 
-	
-});
-
-
-filterByDateButton.addEventListener("click", function() {
+function updateHtmlAfterPost() {
 	var newUrl = url + "/filter/" + textAreaFilterDate.value;
-	clears();
 	getDateFromServer(newUrl, listMealsOnHtmlTable);
 	getDateFromServer(newUrl, sumAllTheCalories);
 	getDateFromServer(newUrl, numberOfMeals);
 	getDateFromServer(newUrl, countConsumedCalories);
+}
+
+
+
+addButton.addEventListener("click", function() {
+	postNewMealToServer(refresCallback);
+	updateValuesOnHtml();
+});
+
+
+filterByDateButton.addEventListener("click", function() {
+	clears();
+	updateHtmlAfterPost();
 });
 
 
 listAllButton.addEventListener("click", function() {
-	clears();
-	listAllMeals();
-	listMealsFromServer(sumAllTheCalories);
-	listMealsFromServer(numberOfMeals);
-	listMealsFromServer(countConsumedCalories);
+	refresCallback();
+	updateValuesOnHtml();
+});
+
+listOfMeals.addEventListener("click", function(meal) {
+	meal.target.parentNode.remove();
+	var id = meal.target.parentNode.getAttribute("id");
+	deleteMealFromServer(id);
+	updateValuesOnHtml();
 });

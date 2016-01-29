@@ -39,9 +39,7 @@ function deleteMeal(id, callback) {
 
 
 function postMeal(attribute, callback) {
-	console.log(attribute);
 	connection.query('INSERT INTO caloriecounter SET ?', attribute, function(err, result) {
-		console.log(attribute);
 		if (err) throw err;
 		callback(result.insertId, callback);
 	});
