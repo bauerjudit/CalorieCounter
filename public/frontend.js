@@ -31,12 +31,6 @@ function getDateFromServer(url, callback) {
 }
 
 
-function clearTableOnHtml() {
-	while (listOfMeals.firstChild) {
-		listOfMeals.removeChild(listOfMeals.firstChild)
-	}
-}
-
 
 function countConsumedCalories(res) {
 	var dailyMaxCalories = 1500;
@@ -68,6 +62,11 @@ function numberOfMeals(res) {
 	return count;
 }
 
+function clearTableOnHtml() {
+	while (listOfMeals.firstChild) {
+		listOfMeals.removeChild(listOfMeals.firstChild)
+	}
+}
 
 function deleteMealFromServer(id) {
 	var req = new XMLHttpRequest();
@@ -131,8 +130,6 @@ function listMealInTable(i, meal) {
 
 
 
-
-
 function init() {
 	listAllMeals();
 	updateValuesOnHtml();
@@ -165,12 +162,6 @@ function updateHtmlAfterPost() {
 	getDateFromServer(newUrl, countConsumedCalories);
 }
 
-function updateHtmlAfterDelete(meal) {
-	meal.target.parentNode.remove();
-	var id = meal.target.parentNode.getAttribute("id");
-	deleteMealFromServer(id);
-	updateValuesOnHtml();
-}
 
 function updateHtmlAfterAddNewMeal() {
 	postNewMealToServer(refresCallback);
@@ -184,6 +175,13 @@ function updateHtmlAfterFilter() {
 
 function updateHtmlByListAllMeal() {
 	refresCallback();
+	updateValuesOnHtml();
+}
+
+function updateHtmlAfterDelete(meal) {
+	meal.target.parentNode.remove();
+	var id = meal.target.parentNode.getAttribute("id");
+	deleteMealFromServer(id);
 	updateValuesOnHtml();
 }
 
