@@ -58,8 +58,8 @@
                 </div >
 
               <div class="col-md-6">
-                <h3 class="sumCalories">Calories: </h3>
-                <h3 class="numberOfMeals"> </h3>
+                <h4 class="sumCalories"></h4>
+                <h4 class="numberOfMeals"> </h4>
                 <div class="progress">
                   <div id= "progressbar" class="progress-bar progress-bar-success progressBar" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 40%">
                   <span class="sr-only"></span>
@@ -94,22 +94,29 @@
 
                   
                       <div class="row">
-                        <div class="col-md-4">
+
+
+
+                        <div class="col-md-4 listButton">
+                          <div class="btn-group" role="group" aria-label="...">
+                              <button type="button" class="btn btn-default listAll">List all the meal(s)</button>
+                            </div>
+                        </div>
+                        <div class="col-md-4 filterInput">
                           <div class="input-group date-filter">
                               <span class="input-group-addon" id="basic-addon1"><span class="glyphicon glyphicon-filter"></span></span>
                               <input type="date" class="form-control filterByDate" placeholder="Filter by date" aria-describedby="basic-addon1">
                             </div>
                         </div>
-                        <div class="col-md-4">
-                          <div class="btn-group" role="group" aria-label="...">
-                              <button type="button" class="btn btn-default listAll">List all the meal(s)</button>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
+
+                        <div class="col-md-4 filterButton">
                           <div class="btn-group" role="group" aria-label="...">
                               <button type="button" class="btn btn-default filterDate">Filter by date</button>
                             </div>
                         </div>
+
+                        
+                        
                       </div>
                                  
 

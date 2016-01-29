@@ -8,8 +8,8 @@ h1 {
 
 }
 
-h2 {
-	font-size: 15px;
+h4 {
+	padding-bottom: 18px;
 }
 
 body {
@@ -58,4 +58,21 @@ tr:hover {
 
 th {
 	text-align: center;
+}
+
+.row {
+	text-align: center;
+}
+
+.listButton {
+	padding-right: 100px;
+}
+
+.filterButton {
+	margin-right: 0px;
+	padding-right: 0px;
+}
+
+.filterInput {
+	padding-left: 80px;
 }
